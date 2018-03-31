@@ -5,11 +5,9 @@ class Comment < ActiveRecord::Base
   accepts_nested_attributes_for :user, reject_if: proc { |attributes| attributes['username'] == "" }
 
   def user_attributes=(user_attributes)
-    if user_attributes.values[0] != ""
-      user_attributes.values.each do |user_attribute|
-        user = User.find_or_create_by(username: user_attribute)
-        self.user = user
-      end
+    user_attributes.values.each do |user_attribute|
+      user = User.find_or_create_by(username: user_attribute)
+      self.user = user
     end
   end
 end
